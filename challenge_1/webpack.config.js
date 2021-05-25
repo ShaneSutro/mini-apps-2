@@ -1,22 +1,41 @@
 const path = require('path');
+// const HtmlWebpackPlugin = require('html-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = {
+  entry: './client/components/app.tsx',
+  target: 'web',
   mode: 'development',
-  entry: './client/app.jsx',
   output: {
     path: path.resolve(__dirname, 'public'),
     filename: 'bundle.js',
   },
-  module: {
-    rules: [{
-      test: /(.js$|.jsx$)/,
-      exclude: [/node_modules/],
-      use: {
-        loader: 'babel-loader',
-        options: {
-          presets: ['@babel/preset-react'],
-        },
-      },
-    }],
+  resolve: {
+    extensions: ['.js', '.jsx', '.json', '.ts', '.tsx'],
   },
+  module: {
+    rules: [
+      {
+        test: /\.(ts|tsx)$/,
+        loader: 'awesome-typescript-loader',
+      },
+      {
+        enforce: 'pre',
+        test: /\.js$/,
+        loader: 'source-map-loader',
+      },
+      {
+        test: /\.css$/,
+        loader: 'css-loader',
+      },
+    ],
+  },
+  plugins: [
+    // new HtmlWebpackPlugin({
+    //   template: path.resolve(__dirname, 'public', 'index.html'),
+    // }),
+    new MiniCssExtractPlugin({
+      filename: './public/style.css',
+    }),
+  ],
 };

@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "jsx": "react",
+    "module": "commonjs",
+    "noImplicitAny": false,
+    "outDir": "./public/",
+    "preserveConstEnums": true,
+    "removeComments": true,
+    "sourceMap": true,
+    "target": "es5"
+  },
+  "include": [
+    "client/components/app.tsx"
+  ]
+}
