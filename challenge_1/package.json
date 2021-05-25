@@ -4,7 +4,10 @@
   "description": "--- ## Mini App 1",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack",
+    "build-dev": "webpack --watch",
+    "start": "json-server --watch ./data/db.json"
   },
   "keywords": [],
   "author": "",
@@ -12,7 +15,11 @@
   "dependencies": {
     "@babel/preset-env": "^7.14.2",
     "@babel/preset-react": "^7.13.13",
-    "babe": "^0.0.1",
+    "babel": "^6.23.0",
+    "babel-loader": "^8.2.2",
+    "eslint": "^7.27.0",
+    "eslint-config-airbnb": "^18.2.1",
+    "json-server": "^0.16.3",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "webpack": "^5.37.1",
