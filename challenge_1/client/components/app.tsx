@@ -1,5 +1,4 @@
 import * as React from 'react';
-import * as ReactDOM from 'react-dom';
 import ReactPaginate from 'react-paginate'
 import EventList from './eventList';
 
@@ -74,5 +73,4 @@ class App extends React.Component<AppProps, AppState> {
   }
 }
 
-// eslint-disable-next-line no-undef
-ReactDOM.render(<App />, document.getElementById('app'));
+export default App;
