@@ -1,6 +1,7 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import ReactPaginate from 'react-paginate'
+import EventList from './eventList';
 
 interface AppProps  {
 }
@@ -15,6 +16,7 @@ interface AppState {
     lang: string
   }?],
   pageCount: number,
+  currentPage: number,
 }
 
 class App extends React.Component<AppProps, AppState> {
@@ -22,7 +24,8 @@ class App extends React.Component<AppProps, AppState> {
     super(props);
     this.state = {
       events: [],
-      pageCount: 1,
+      pageCount: 0,
+      currentPage: 0,
     };
   }
 
@@ -30,20 +33,30 @@ class App extends React.Component<AppProps, AppState> {
     console.log('Clicked!')
   }
 
-  componentDidMount() {
-    fetch('http://localhost:3000/events')
-      .then((result) => result.json())
+  getSpecifiedRecords(page: string): void {
+    fetch(`http://localhost:3000/events?_page=${page}&_limit=10`)
+      .then((result) => {
+        this.setState({ pageCount: Math.ceil( Number(result.headers.get('X-Total-Count')) / 10 ) })
+        return result.json()
+      })
       .then((records) => {
-        const newRecords: AppState['events'] = records.slice(0, 10);
-        this.setState({ events: newRecords})
+        const newRecords: AppState['events'] = records;
+        this.setState({
+          events: newRecords,
+        })
       })
       .catch((err) => console.error(err));
+  }
+
+  componentDidMount() {
+    // this.getSpecifiedRecords('0');
   }
 
   render() {
     return (
       <div>
         <h1>Test</h1>
+        <EventList events={this.state.events} />
         <ReactPaginate
           previousLabel={'previous'}
           nextLabel={'next'}
