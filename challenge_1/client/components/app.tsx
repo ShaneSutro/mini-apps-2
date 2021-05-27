@@ -31,8 +31,8 @@ class App extends React.Component<AppProps, AppState> {
     };
   }
 
-  handlePageClick(): void {
-    console.log('Clicked!')
+  handlePageClick(e): void {
+    this.getSpecifiedRecords(e.selected + 1, this.state.searchTerm)
   }
 
   getSpecifiedRecords(page: number, searchTerm: string): void {
@@ -88,7 +88,7 @@ class App extends React.Component<AppProps, AppState> {
           pageCount={this.state.pageCount}
           marginPagesDisplayed={2}
           pageRangeDisplayed={5}
-          onPageChange={this.handlePageClick}
+          onPageChange={this.handlePageClick.bind(this)}
           containerClassName={'pagination'}
           activeClassName={'active'}
         />
