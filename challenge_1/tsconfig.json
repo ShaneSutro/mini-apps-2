@@ -10,6 +10,6 @@
     "target": "es5"
   },
   "include": [
-    "client/components/app.tsx"
+    "client/index.tsx"
   ]
 }
