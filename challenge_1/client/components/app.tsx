@@ -17,6 +17,7 @@ interface AppState {
   }?],
   pageCount: number,
   currentPage: number,
+  searchTerm: string,
 }
 
 class App extends React.Component<AppProps, AppState> {
@@ -26,6 +27,7 @@ class App extends React.Component<AppProps, AppState> {
       events: [],
       pageCount: 0,
       currentPage: 0,
+      searchTerm: '',
     };
   }
 
@@ -33,8 +35,8 @@ class App extends React.Component<AppProps, AppState> {
     console.log('Clicked!')
   }
 
-  getSpecifiedRecords(page: string): void {
-    fetch(`http://localhost:3000/events?_page=${page}&_limit=10`)
+  getSpecifiedRecords(page: number, searchTerm: string): void {
+    fetch(`http://localhost:3000/events?_page=${page}&_limit=10&q=${searchTerm}`)
       .then((result) => {
         this.setState({ pageCount: Math.ceil( Number(result.headers.get('X-Total-Count')) / 10 ) })
         return result.json()
@@ -52,10 +54,27 @@ class App extends React.Component<AppProps, AppState> {
     // this.getSpecifiedRecords('0');
   }
 
+  search(e) {
+    e.preventDefault();
+    console.log('Searching for', this.state.searchTerm);
+    this.getSpecifiedRecords(0, this.state.searchTerm);
+    this.setState({currentPage: 0})
+  }
+
+  textFieldDidChange(e) {
+    this.setState({searchTerm: e.target.value})
+    console.log(e.target.value);
+  }
+
   render() {
     return (
       <div>
-        <h1>Test</h1>
+        <h1>Historical Events Finder</h1>
+        <form onSubmit={this.search.bind(this)}>
+          <label htmlFor="search">Search Using Keywords</label>
+          <input onChange={this.textFieldDidChange.bind(this)} name="search" placeholder="Type something here..." value={this.state.searchTerm}></input>
+          <button type="submit">Search</button>
+        </form>
         <EventList events={this.state.events} />
         <ReactPaginate
           previousLabel={'previous'}
