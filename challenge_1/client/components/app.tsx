@@ -63,7 +63,11 @@ class App extends React.Component<AppProps, AppState> {
 
   textFieldDidChange(e) {
     this.setState({searchTerm: e.target.value})
-    console.log(e.target.value);
+  }
+
+  nextPage() {
+    const currentPage = this.state.currentPage + 1;
+    this.setState({ currentPage });
   }
 
   render() {
@@ -77,8 +81,8 @@ class App extends React.Component<AppProps, AppState> {
         </form>
         <EventList events={this.state.events} />
         <ReactPaginate
-          previousLabel={'previous'}
-          nextLabel={'next'}
+          previousLabel={'PREV'}
+          nextLabel={'NEXT'}
           breakLabel={'...'}
           breakClassName={'break-me'}
           pageCount={this.state.pageCount}
