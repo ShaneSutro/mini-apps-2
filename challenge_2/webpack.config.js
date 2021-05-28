@@ -6,6 +6,13 @@ module.exports = {
   entry: './client/index.tsx',
   target: 'web',
   mode: 'development',
+  devServer: {
+    host: 'localhost',
+    port: '8080',
+    proxy: {
+      '**': 'http://localhost:3000',
+    },
+  },
   output: {
     path: path.resolve(__dirname, 'public'),
     filename: 'bundle.js',
