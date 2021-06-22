@@ -20,7 +20,7 @@ const Keypad = ({ actions }) => (
           <td onClick={actions.select}>9</td>
           <td onClick={actions.select}>X</td>
           <td> </td>
-          <td onClick={actions.select}>Miss</td>
+          <td onClick={actions.select}>0</td>
         </tr>
       </tbody>
     </table>
