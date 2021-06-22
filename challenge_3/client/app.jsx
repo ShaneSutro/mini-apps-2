@@ -119,6 +119,7 @@ class App extends React.Component {
     if (!this.scoreIsValid(frame, score)) { return; }
     this.addBonus(frame - 1, score);
     this.addScore(frame, score);
+    // TODO: Check if strike/spare here before moving on to next turn
     this.nextTurn();
     console.log(score);
   }
