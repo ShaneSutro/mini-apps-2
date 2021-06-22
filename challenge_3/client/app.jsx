@@ -4,6 +4,8 @@ import ReactDOM from 'react-dom';
 import Keypad from './components/Keypad.jsx';
 import Frames from './components/Frames.jsx';
 
+const { log } = console;
+
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -53,12 +55,23 @@ class App extends React.Component {
       ],
       frame: 1,
       toss: 1,
+      tosses: {
+        1: 0,
+        2: 0,
+        3: 0,
+      },
     };
   }
 
+  frameFinished() {
+    const { frame } = this.state;
+    this.setState({ tosses: { 1: 0, 2: 0, 3: 0 }, toss: 1, frame: frame + 1 });
+  }
+
   select(event) {
-    console.log('Saving!')
-    console.log(event.target.innerText)
+    log('Frame', this.state.frame, '- toss', this.state.toss);
+    this.frameFinished();
+    console.log(event.target.innerText);
   }
 
   render() {
