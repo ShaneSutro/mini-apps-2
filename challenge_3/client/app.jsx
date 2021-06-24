@@ -111,7 +111,7 @@ class App extends React.Component {
           },
         },
       ],
-      frame: 1,
+      frame: 10,
       toss: 1,
       bonuses: [],
       gameOver: '',
@@ -140,9 +140,13 @@ class App extends React.Component {
     }
   }
 
-  nextTurn(score) {
+  nextTurn() {
     const { toss, frame, scores } = this.state;
-    if (frame > 11 || (frame === 11 && toss === 1 && score < 10)) {
+    if (frame === 10 && toss === 3) {
+      this.setState({ gameOver: 'Game over!' });
+      return;
+    }
+    if (toss === 2 && scores[9].score.one + scores[9].score.two < 10) {
       this.setState({ gameOver: 'Game over!' });
       return;
     }
@@ -153,13 +157,10 @@ class App extends React.Component {
       } else {
         this.setState({ toss: 1 + toss });
       }
-    } else {
-      console.log('increment toss');
-      if (toss !== 3) {
-        this.setState({ toss: 1 + toss });
-      } else if (toss === 3) {
-        this.frameFinished();
-      }
+    } else if (toss !== 3) {
+      this.setState({ toss: 1 + toss });
+    } else if (toss === 3) {
+      this.frameFinished();
     }
   }
 
@@ -180,10 +181,17 @@ class App extends React.Component {
 
   scoreIsValid(frame, score) {
     const { scores, toss } = this.state;
-    // TODO: fix score validation when first two throws are greater than 10 unless the first throw was already 10
     if (frame === 10) {
-      if ((toss < 3 && scores[9].score.one + Number(score) > 10) || scores[9].score.total > 20) {
-        return false;
+      const frameTenScores = scores[9].score;
+      if (toss < 3 && frameTenScores.one !== 10) {
+        if (frameTenScores.one + frameTenScores.two > 10) {
+          return false;
+        }
+      }
+      if (frameTenScores.one === 10 && frameTenScores.two !== 10) {
+        if (frameTenScores.two + Number(score) > 10) {
+          return false;
+        }
       }
       return true;
     }
@@ -197,9 +205,7 @@ class App extends React.Component {
       scores,
       bonuses,
     } = this.state;
-    if (toss > 2) {
-      // TODO: handle logic for 10th frame here
-    } else {
+    if (toss <= 2) {
       const score = scores[frame - 1].score.total;
       if (score === 10) {
         const bonus = {
@@ -220,17 +226,14 @@ class App extends React.Component {
   }
 
   select(event) {
-    const { frame, toss } = this.state;
+    const { frame, toss, gameOver } = this.state;
     const score = event.target.innerText;
+    if (gameOver !== '') { return; }
     log('Frame', frame, '- toss', toss);
     if (!this.scoreIsValid(frame, score)) { return; }
-    console.log('adding bonus')
     this.addBonus(frame - 1, score);
-    console.log('adding bonus 2')
     this.addScore(frame, score, toss);
-    console.log('adding bonus 3')
     this.checkStrikeOrSpare();
-    console.log('adding bonus 4')
     this.nextTurn(score);
   }
 
