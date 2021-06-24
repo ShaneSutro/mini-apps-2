@@ -111,7 +111,7 @@ class App extends React.Component {
           },
         },
       ],
-      frame: 10,
+      frame: 1,
       toss: 1,
       bonuses: [],
       gameOver: '',
