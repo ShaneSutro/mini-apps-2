@@ -15,56 +15,106 @@ class App extends React.Component {
       scores: [
         {
           frame: 1,
-          score: 0,
+          score: {
+            one: 0,
+            two: 0,
+            total: 0,
+          },
         },
         {
           frame: 2,
-          score: 0,
+          score: {
+            one: 0,
+            two: 0,
+            total: 0,
+          },
         },
         {
           frame: 3,
-          score: 0,
+          score: {
+            one: 0,
+            two: 0,
+            total: 0,
+          },
         },
         {
           frame: 4,
-          score: 0,
+          score: {
+            one: 0,
+            two: 0,
+            total: 0,
+          },
         },
         {
           frame: 5,
-          score: 0,
+          score: {
+            one: 0,
+            two: 0,
+            total: 0,
+          },
         },
         {
           frame: 6,
-          score: 0,
+          score: {
+            one: 0,
+            two: 0,
+            total: 0,
+          },
         },
         {
           frame: 7,
-          score: 0,
+          score: {
+            one: 0,
+            two: 0,
+            total: 0,
+          },
         },
         {
           frame: 8,
-          score: 0,
+          score: {
+            one: 0,
+            two: 0,
+            total: 0,
+          },
         },
         {
           frame: 9,
-          score: 0,
+          score: {
+            one: 0,
+            two: 0,
+            total: 0,
+          },
         },
         {
           frame: 10,
-          score: 0,
+          score: {
+            one: 0,
+            two: 0,
+            three: 0,
+            total: 0,
+          },
         },
         {
           frame: 11,
-          score: 0,
+          score: {
+            one: 0,
+            two: 0,
+            total: 0,
+          },
         },
         {
           frame: 12,
-          score: 0,
+          score: {
+            one: 0,
+            two: 0,
+            total: 0,
+          },
         },
       ],
       frame: 1,
       toss: 1,
       bonuses: [],
+      gameOver: '',
     };
   }
 
@@ -79,8 +129,8 @@ class App extends React.Component {
     for (let i = 0; i < bonuses.length; i++) {
       const bonus = bonuses[i];
       if (bonus.bonusRemaining > 0) {
-        const frameScore = scores[bonus.forFrame - 1].score;
-        scores[bonus.forFrame - 1].score = Number(frameScore) + Number(score);
+        const frameScore = scores[bonus.forFrame - 1].score.total;
+        scores[bonus.forFrame - 1].score.total = Number(frameScore) + Number(score);
         bonuses[i].bonusRemaining--;
         this.setState({
           bonuses,
@@ -90,27 +140,51 @@ class App extends React.Component {
     }
   }
 
-  nextTurn() {
+  nextTurn(score) {
     const { toss, frame, scores } = this.state;
-    if ((toss === 2 && frame < 10) || scores[frame - 1].score === 10) {
-      this.setState({ toss: 1 });
-      this.frameFinished();
+    if (frame > 11 || (frame === 11 && toss === 1 && score < 10)) {
+      this.setState({ gameOver: 'Game over!' });
+      return;
+    }
+    if (frame !== 10) {
+      if ((toss === 2 && frame < 10) || scores[frame - 1].score.total === 10) {
+        this.setState({ toss: 1 });
+        this.frameFinished();
+      } else {
+        this.setState({ toss: 1 + toss });
+      }
     } else {
-      this.setState({ toss: 1 + toss });
+      console.log('increment toss');
+      if (toss !== 3) {
+        this.setState({ toss: 1 + toss });
+      } else if (toss === 3) {
+        this.frameFinished();
+      }
     }
   }
 
-  addScore(frame, score) {
+  addScore(frame, score, toss) {
+    const tosses = {
+      1: 'one',
+      2: 'two',
+      3: 'three',
+    };
+    const turn = tosses[toss];
     let { total } = this.state;
     const { scores } = this.state;
-    scores[frame - 1].score += Number(score);
+    scores[frame - 1].score[turn] += Number(score);
+    scores[frame - 1].score.total += Number(score);
     total += Number(score);
     this.setState({ scores, total });
   }
 
   scoreIsValid(frame, score) {
     const { scores } = this.state;
-    return scores[frame - 1].score + Number(score) <= 10;
+    if (frame !== 10) {
+      return scores[frame - 1].score.total + Number(score) <= 10;
+    } else {
+      return true;
+    }
   }
 
   checkStrikeOrSpare() {
@@ -123,7 +197,7 @@ class App extends React.Component {
     if (toss > 2) {
       // TODO: handle logic for 10th frame here
     } else {
-      const { score } = scores[frame - 1];
+      const score = scores[frame - 1].score.total;
       if (score === 10) {
         const bonus = {
           forFrame: frame,
@@ -147,19 +221,28 @@ class App extends React.Component {
     const score = event.target.innerText;
     log('Frame', frame, '- toss', toss);
     if (!this.scoreIsValid(frame, score)) { return; }
+    console.log('adding bonus')
     this.addBonus(frame - 1, score);
-    this.addScore(frame, score);
+    console.log('adding bonus 2')
+    this.addScore(frame, score, toss);
+    console.log('adding bonus 3')
     this.checkStrikeOrSpare();
-    this.nextTurn();
-    console.log(score);
+    console.log('adding bonus 4')
+    this.nextTurn(score);
   }
 
   render() {
-    const { scores, total } = this.state;
+    const {
+      scores,
+      total,
+      gameOver,
+      frame,
+    } = this.state;
     return (
       <div>
+        <h1>{gameOver}</h1>
         <Keypad actions={{ select: this.select.bind(this) }} />
-        <Frames frames={{ scores }} total={total} />
+        <Frames frames={{ scores }} total={total} currentFrame={frame} />
       </div>
     );
   }
