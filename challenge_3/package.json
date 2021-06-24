@@ -4,9 +4,15 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest",
     "start": "nodemon server.js",
     "react-dev": "webpack --watch"
+  },
+  "jest": {
+    "setupFiles": ["./client/setupTests.js"],
+    "snapshotSerializers": [
+      "enzyme-to-json/serializer"
+    ]
   },
   "keywords": [],
   "author": "",
@@ -26,6 +32,8 @@
   "devDependencies": {
     "babel-loader": "^8.2.2",
     "enzyme": "^3.11.0",
+    "enzyme-adapter-react-17-updated": "^1.0.2",
+    "enzyme-to-json": "^3.6.2",
     "html-webpack-plugin": "^5.3.1",
     "jest": "^27.0.5",
     "nodemon": "^2.0.7",
