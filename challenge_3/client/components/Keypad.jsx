@@ -18,7 +18,7 @@ const Keypad = ({ actions }) => (
         </tr>
         <tr>
           <td onClick={actions.select}>9</td>
-          <td onClick={actions.select}>X</td>
+          <td onClick={actions.select}>10</td>
           <td> </td>
           <td onClick={actions.select}>0</td>
         </tr>

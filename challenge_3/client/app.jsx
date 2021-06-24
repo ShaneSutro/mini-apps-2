@@ -91,8 +91,8 @@ class App extends React.Component {
   }
 
   nextTurn() {
-    const { toss, frame } = this.state;
-    if (toss === 2 && frame < 10) {
+    const { toss, frame, scores } = this.state;
+    if ((toss === 2 && frame < 10) || scores[frame - 1].score === 10) {
       this.setState({ toss: 1 });
       this.frameFinished();
     } else {
@@ -101,7 +101,8 @@ class App extends React.Component {
   }
 
   addScore(frame, score) {
-    let { scores, total } = this.state;
+    let { total } = this.state;
+    const { scores } = this.state;
     scores[frame - 1].score += Number(score);
     total += Number(score);
     this.setState({ scores, total });
@@ -112,6 +113,32 @@ class App extends React.Component {
     return scores[frame - 1].score + Number(score) <= 10;
   }
 
+  checkStrikeOrSpare() {
+    const { frame, toss, scores } = this.state;
+    if (toss > 2) {
+      // TODO: handle logic for 10th frame here
+    } else {
+      const { score } = scores[frame - 1];
+      if (score === 10) {
+        const bonus = {
+          forFrame: frame,
+          bonusRemaining: 0,
+        };
+        if (toss === 1) {
+          //TODO: It's a strike
+          console.log('Strike!');
+          bonus.bonusRemaining = 2;
+          this.setState({ bonus });
+        } else if (toss === 2) {
+          //TODO: it's a spare
+          console.log('Spare!');
+          bonus.bonusRemaining = 1;
+          this.setState({ bonus });
+        }
+      }
+    }
+  }
+
   select(event) {
     const { frame, toss } = this.state;
     const score = event.target.innerText;
@@ -119,7 +146,7 @@ class App extends React.Component {
     if (!this.scoreIsValid(frame, score)) { return; }
     this.addBonus(frame - 1, score);
     this.addScore(frame, score);
-    // TODO: Check if strike/spare here before moving on to next turn
+    this.checkStrikeOrSpare();
     this.nextTurn();
     console.log(score);
   }
