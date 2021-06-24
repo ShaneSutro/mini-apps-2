@@ -1,3 +1,4 @@
+/* eslint-disable no-plusplus */
 /* eslint-disable import/extensions */
 import React from 'react';
 import ReactDOM from 'react-dom';
@@ -52,42 +53,41 @@ class App extends React.Component {
           frame: 10,
           score: 0,
         },
+        {
+          frame: 11,
+          score: 0,
+        },
+        {
+          frame: 12,
+          score: 0,
+        },
       ],
       frame: 1,
       toss: 1,
-      tosses: {
-        1: 0,
-        2: 0,
-        3: 0,
-      },
-      bonus: {
-        forFrame: 0,
-        bonusRemaining: 0,
-      },
+      bonuses: [],
     };
   }
 
   frameFinished() {
     const { frame } = this.state;
-    this.setState({ tosses: { 1: 0, 2: 0, 3: 0 }, toss: 1, frame: frame + 1 });
+    this.setState({ toss: 1, frame: frame + 1 });
   }
 
   addBonus(frame, score) {
-    const { scores, bonus } = this.state;
+    const { scores, bonuses } = this.state;
     log('checking score');
-    if (bonus.bonusRemaining === 0) {
-      this.setState({ bonus: { forFrame: 0, bonusRemaining: 0 } });
-      return;
+    for (let i = 0; i < bonuses.length; i++) {
+      const bonus = bonuses[i];
+      if (bonus.bonusRemaining > 0) {
+        const frameScore = scores[bonus.forFrame - 1].score;
+        scores[bonus.forFrame - 1].score = Number(frameScore) + Number(score);
+        bonuses[i].bonusRemaining--;
+        this.setState({
+          bonuses,
+          scores,
+        });
+      }
     }
-    const frameScore = scores[bonus.forFrame - 1].score;
-    scores[bonus.forFrame - 1].score = Number(frameScore) + Number(score);
-    this.setState({
-      bonus: {
-        forFrame: bonus.forFrame,
-        bonusRemaining: bonus.bonusRemaining - 1,
-      },
-      scores,
-    });
   }
 
   nextTurn() {
@@ -114,7 +114,12 @@ class App extends React.Component {
   }
 
   checkStrikeOrSpare() {
-    const { frame, toss, scores } = this.state;
+    const {
+      frame,
+      toss,
+      scores,
+      bonuses,
+    } = this.state;
     if (toss > 2) {
       // TODO: handle logic for 10th frame here
     } else {
@@ -125,15 +130,13 @@ class App extends React.Component {
           bonusRemaining: 0,
         };
         if (toss === 1) {
-          //TODO: It's a strike
-          console.log('Strike!');
           bonus.bonusRemaining = 2;
-          this.setState({ bonus });
+          bonuses.push(bonus);
+          this.setState({ bonuses });
         } else if (toss === 2) {
-          //TODO: it's a spare
-          console.log('Spare!');
           bonus.bonusRemaining = 1;
-          this.setState({ bonus });
+          bonuses.push(bonus);
+          this.setState({ bonuses });
         }
       }
     }
@@ -152,11 +155,11 @@ class App extends React.Component {
   }
 
   render() {
-    const { scores } = this.state;
+    const { scores, total } = this.state;
     return (
       <div>
         <Keypad actions={{ select: this.select.bind(this) }} />
-        <Frames frames={{ scores }} />
+        <Frames frames={{ scores }} total={total} />
       </div>
     );
   }
