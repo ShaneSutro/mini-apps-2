@@ -9,15 +9,19 @@
     "react-dev": "webpack --watch"
   },
   "jest": {
-    "setupFiles": ["./client/setupTests.js"],
+    "setupFiles": [
+      "./client/setupTests.js"
+    ],
     "snapshotSerializers": [
       "enzyme-to-json/serializer"
-    ]
+    ],
+    "testEnvironment": "jsdom"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@babel/preset-env": "^7.14.7",
     "@babel/preset-react": "^7.14.5",
     "babel": "^6.23.0",
     "eslint": "^7.29.0",

@@ -5,13 +5,13 @@ import PropTypes from 'prop-types';
 
 const Keypad = ({ actions }) => (
   <div>
-    <table>
+    <table id="keypad">
       <tbody>
         <tr>
           <td onClick={actions.select}>1</td>
           <td onClick={actions.select}>2</td>
           <td onClick={actions.select}>3</td>
-          <td onClick={actions.select}>4</td>
+          <td id="four" onClick={actions.select}>4</td>
         </tr>
         <tr>
           <td onClick={actions.select}>5</td>

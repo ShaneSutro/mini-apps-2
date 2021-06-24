@@ -1,7 +1,6 @@
 /* eslint-disable no-plusplus */
 /* eslint-disable import/extensions */
 import React from 'react';
-import ReactDOM from 'react-dom';
 import Keypad from './components/Keypad.jsx';
 import Frames from './components/Frames.jsx';
 
@@ -146,6 +145,8 @@ class App extends React.Component {
       this.setState({ gameOver: 'Game over!' });
       return;
     }
+    // BUG: Need to ALSO check for frame, otherwise false stop
+    // BUG: occurs on earlier frames
     if (toss === 2 && scores[9].score.one + scores[9].score.two < 10) {
       this.setState({ gameOver: 'Game over!' });
       return;
@@ -254,5 +255,4 @@ class App extends React.Component {
   }
 }
 
-// eslint-disable-next-line no-undef
-ReactDOM.render(<App />, document.getElementById('app'));
+export default App;

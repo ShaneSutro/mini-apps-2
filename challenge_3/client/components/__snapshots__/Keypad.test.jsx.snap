@@ -1,0 +1,77 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Testing the scoring algorithms Should be set up correctly 1`] = `
+<div>
+  <table
+    id="keypad"
+  >
+    <tbody>
+      <tr>
+        <td
+          onClick={[Function]}
+        >
+          1
+        </td>
+        <td
+          onClick={[Function]}
+        >
+          2
+        </td>
+        <td
+          onClick={[Function]}
+        >
+          3
+        </td>
+        <td
+          id="four"
+          onClick={[Function]}
+        >
+          4
+        </td>
+      </tr>
+      <tr>
+        <td
+          onClick={[Function]}
+        >
+          5
+        </td>
+        <td
+          onClick={[Function]}
+        >
+          6
+        </td>
+        <td
+          onClick={[Function]}
+        >
+          7
+        </td>
+        <td
+          onClick={[Function]}
+        >
+          8
+        </td>
+      </tr>
+      <tr>
+        <td
+          onClick={[Function]}
+        >
+          9
+        </td>
+        <td
+          onClick={[Function]}
+        >
+          10
+        </td>
+        <td>
+           
+        </td>
+        <td
+          onClick={[Function]}
+        >
+          0
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+`;
