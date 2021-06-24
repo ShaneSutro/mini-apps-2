@@ -128,7 +128,7 @@ class App extends React.Component {
     log('checking score');
     for (let i = 0; i < bonuses.length; i++) {
       const bonus = bonuses[i];
-      if (bonus.bonusRemaining > 0) {
+      if (bonus.bonusRemaining > 0 && bonus.forFrame < 10) {
         const frameScore = scores[bonus.forFrame - 1].score.total;
         scores[bonus.forFrame - 1].score.total = Number(frameScore) + Number(score);
         bonuses[i].bonusRemaining--;
@@ -179,12 +179,15 @@ class App extends React.Component {
   }
 
   scoreIsValid(frame, score) {
-    const { scores } = this.state;
-    if (frame !== 10) {
-      return scores[frame - 1].score.total + Number(score) <= 10;
-    } else {
+    const { scores, toss } = this.state;
+    // TODO: fix score validation when first two throws are greater than 10 unless the first throw was already 10
+    if (frame === 10) {
+      if ((toss < 3 && scores[9].score.one + Number(score) > 10) || scores[9].score.total > 20) {
+        return false;
+      }
       return true;
     }
+    return scores[frame - 1].score.total + Number(score) <= 10;
   }
 
   checkStrikeOrSpare() {
