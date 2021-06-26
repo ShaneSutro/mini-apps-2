@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">20% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>3/15</span>
+                <span class='fraction'>15/15</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>0/8</span>
+                <span class='fraction'>8/8</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>0/4</span>
+                <span class='fraction'>4/4</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">20% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>3/15</span>
+                <span class='fraction'>15/15</span>
             </div>
         
             
@@ -55,7 +55,7 @@
             Press <em>n</em> or <em>j</em> to go to the next uncovered block, <em>b</em>, <em>p</em> or <em>k</em> for the previous block.
         </p>
     </div>
-    <div class='status-line low'></div>
+    <div class='status-line high'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -130,7 +130,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">41x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -138,33 +138,33 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">492x</span>
+<span class="cline-any cline-yes">410x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">82x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">492x</span>
+<span class="cline-any cline-yes">369x</span>
+<span class="cline-any cline-yes">123x</span>
+<span class="cline-any cline-yes">41x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">82x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">492x</span>
+<span class="cline-any cline-yes">410x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">82x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -197,42 +197,42 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 &nbsp;
-const Frames = <span class="fstat-no" title="function not covered" >({</span> frames, total, currentFrame }) =&gt; (
-<span class="cstat-no" title="statement not covered" >  &lt;div&gt;</span>
+const Frames = ({ frames, total, currentFrame }) =&gt; (
+  &lt;div&gt;
     &lt;h1&gt;Score&lt;/h1&gt;
     &lt;h2&gt;{`Frame ${currentFrame}`}&lt;/h2&gt;
     &lt;h3&gt;{`Total: ${total}`}&lt;/h3&gt;
     &lt;table&gt;
       &lt;tbody&gt;
         &lt;tr&gt;
-          {frames.scores.map(<span class="fstat-no" title="function not covered" >(f</span>rame) =&gt; {
-<span class="cstat-no" title="statement not covered" >            if (frame.frame &lt;= 10) {</span>
-<span class="cstat-no" title="statement not covered" >              return (</span>
+          {frames.scores.map((frame) =&gt; {
+            if (frame.frame &lt;= 10) {
+              return (
                 &lt;th key={frame.frame}&gt;
                   {`Frame ${frame.frame}`}
                 &lt;/th&gt;
               );
             }
-<span class="cstat-no" title="statement not covered" >            return null;</span>
+            return null;
           })}
         &lt;/tr&gt;
         &lt;tr&gt;
-          {frames.scores.map(<span class="fstat-no" title="function not covered" >(f</span>rame) =&gt; {
-<span class="cstat-no" title="statement not covered" >            if (frame.frame &lt; 10) {</span>
-<span class="cstat-no" title="statement not covered" >              return &lt;td key={frame.frame}&gt;{`${frame.score.one} | ${frame.score.two}`}&lt;/td&gt;;</span>
-            } else <span class="cstat-no" title="statement not covered" >if (frame.frame === 10) {</span>
-<span class="cstat-no" title="statement not covered" >              return &lt;td key={frame.frame}&gt;{`${frame.score.one} | ${frame.score.two} | ${frame.score.three}`}&lt;/td&gt;;</span>
+          {frames.scores.map((frame) =&gt; {
+            if (frame.frame &lt; 10) {
+              return &lt;td key={frame.frame}&gt;{`${frame.score.one} | ${frame.score.two}`}&lt;/td&gt;;
+            } else if (frame.frame === 10) {
+              return &lt;td key={frame.frame}&gt;{`${frame.score.one} | ${frame.score.two} | ${frame.score.three}`}&lt;/td&gt;;
             } else {
-<span class="cstat-no" title="statement not covered" >              return null;</span>
+              return null;
             }
           })}
         &lt;/tr&gt;
         &lt;tr&gt;
-          {frames.scores.map(<span class="fstat-no" title="function not covered" >(f</span>rame) =&gt; {
-<span class="cstat-no" title="statement not covered" >            if (frame.frame &lt;= 10) {</span>
-<span class="cstat-no" title="statement not covered" >              return &lt;td key={frame.frame}&gt;{`Frame Total: ${frame.score.total}`}&lt;/td&gt;;</span>
+          {frames.scores.map((frame) =&gt; {
+            if (frame.frame &lt;= 10) {
+              return &lt;td key={frame.frame}&gt;{`Frame Total: ${frame.score.total}`}&lt;/td&gt;;
             }
-<span class="cstat-no" title="statement not covered" >            return null;</span>
+            return null;
           })}
         &lt;/tr&gt;
       &lt;/tbody&gt;
@@ -268,7 +268,7 @@ export default Frames;
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank">istanbul</a>
-                at Thu Jun 24 2021 12:47:30 GMT-0600 (Mountain Daylight Time)
+                at Sat Jun 26 2021 13:03:06 GMT-0600 (Mountain Daylight Time)
             </div>
         </div>
         <script src="../../prettify.js"></script>
