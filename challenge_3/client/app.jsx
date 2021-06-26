@@ -124,16 +124,23 @@ class App extends React.Component {
 
   addBonus(frame, score) {
     const { scores, bonuses } = this.state;
-    log('checking score');
+    let { total } = this.state;
     for (let i = 0; i < bonuses.length; i++) {
       const bonus = bonuses[i];
-      if (bonus.bonusRemaining > 0 && bonus.forFrame < 10) {
+      if (bonus.bonusRemaining > 0 && bonus.forFrame <= 10) {
         const frameScore = scores[bonus.forFrame - 1].score.total;
-        scores[bonus.forFrame - 1].score.total = Number(frameScore) + Number(score);
+        if (bonus.forFrame !== 10) {
+          scores[bonus.forFrame - 1].score.total = Number(frameScore) + Number(score);
+        }
+        let newTotal = 0;
+        for (var j = 0; j < scores.length; j++) {
+          newTotal += scores[j].score.total;
+        }
         bonuses[i].bonusRemaining--;
         this.setState({
           bonuses,
           scores,
+          total: newTotal,
         });
       }
     }
@@ -142,15 +149,15 @@ class App extends React.Component {
   nextTurn() {
     const { toss, frame, scores } = this.state;
     if (frame === 10 && toss === 3) {
-      this.setState({ gameOver: 'Game over!' });
-      return;
+      if (toss === 3) {
+        this.setState({ gameOver: 'Game over!' });
+        return;
+      } else if (toss === 2 && scores[9].score.one + scores[9].score.two < 10) {
+        this.setState({ gameOver: 'Game over!' });
+        return;
+      }
     }
-    // BUG: Need to ALSO check for frame, otherwise false stop
-    // BUG: occurs on earlier frames
-    if (toss === 2 && scores[9].score.one + scores[9].score.two < 10) {
-      this.setState({ gameOver: 'Game over!' });
-      return;
-    }
+
     if (frame !== 10) {
       if ((toss === 2 && frame < 10) || scores[frame - 1].score.total === 10) {
         this.setState({ toss: 1 });
@@ -230,10 +237,9 @@ class App extends React.Component {
     const { frame, toss, gameOver } = this.state;
     const score = event.target.innerText;
     if (gameOver !== '') { return; }
-    log('Frame', frame, '- toss', toss);
     if (!this.scoreIsValid(frame, score)) { return; }
-    this.addBonus(frame - 1, score);
     this.addScore(frame, score, toss);
+    this.addBonus(frame - 1, score);
     this.checkStrikeOrSpare();
     this.nextTurn(score);
   }
