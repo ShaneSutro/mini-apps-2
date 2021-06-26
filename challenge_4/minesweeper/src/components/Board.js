@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import BoardRow from './BoardRow';
 
 import { increment } from '../actions/increment';
 
@@ -11,15 +12,18 @@ const mapDispatchToProps = (dispatch) => ({
   increment: (num) => dispatch(increment(num))
 })
 
-const Board = (props) => {
+const Board = ({ board }) => {
+  if (Object.keys(board).length === 0) {
+    board = []
+  }
   return (
     <div>
-      <h1>{props.actionIncrement.count}</h1>
-      <pre>
-        {
-          JSON.stringify(props)
-        }
-      </pre>
+      <table>
+        <tbody>
+          {console.log(board)}
+          {board.map((row) => <BoardRow row={row} />)}
+        </tbody>
+      </table>
     </div>
   )
 }

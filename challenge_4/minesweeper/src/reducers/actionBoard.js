@@ -1,11 +1,9 @@
 const reducer = (state = {}, action) => {
-  if (action.type === 'TEST_ACTION') {
-    return {
-      result: action.payload,
-    }
+  if (action.type === 'BOARD_UPDATE') {
+    return action.payload;
   } else {
     return state;
   }
-};
+}
 
 export default reducer;

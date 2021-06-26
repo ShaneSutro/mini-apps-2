@@ -1,8 +1,8 @@
 import { combineReducers } from 'redux';
-import testReducer from './testReducer';
+import board from './actionBoard';
 import actionIncrement from './actionIncrement';
 
 export default combineReducers({
-  testReducer,
+  board,
   actionIncrement,
 })
