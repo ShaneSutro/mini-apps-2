@@ -5,6 +5,7 @@ import { testAction } from './actions/testAction';
 import { increment } from './actions/increment';
 
 import './App.css';
+import Board from './components/Board';
 
 
 const mapStateToProps = (state) => ({
@@ -18,26 +19,18 @@ const mapDispatchToProps = (dispatch) => ({
 
 class App extends Component {
 
-  testAction(event) {
-    this.props.testAction();
-  }
-
-  increment(number) {
-    console.log('increment', number)
-    this.props.increment(number)
-  }
-
   render() {
     return (
       <div className="App">
         <h1>Oh hey there</h1>
-
+        <h3>Count: {this.props.actionIncrement.count}</h3>
         <pre>
           {
             JSON.stringify(this.props)
           }
         </pre>
-        <button onClick={() => this.increment(this.props.testReducer.count)}>Test Action</button>
+        <button onClick={() => this.props.increment(this.props.actionIncrement.count)}>Test Action</button>
+        <Board />
       </div>
     )
   }
