@@ -13,6 +13,10 @@
   color: white;
 }
 
+table {
+  margin: 0 auto;
+}
+
 .cell {
   border: 1px solid grey;
   text-align: center;
@@ -25,14 +29,27 @@
   cursor: crosshair;
 }
 
-.flagged-true:hover {
-  cursor: not-allowed;
-}
-
 .revealed-false {
   background-color: beige;
+  font-size: 0;
 }
 
 .revealed-true {
   background-color: white;
+}
+
+.flagged-true {
+  font-size: medium;
+}
+
+.flagged-true:hover {
+  cursor: not-allowed;
+}
+
+.good {
+  color: rgb(0, 63, 15)
+}
+
+.destructive {
+  color: #760101
 }

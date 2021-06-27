@@ -85,12 +85,8 @@ class App extends Component {
     return (
       <div className="App">
         <h1>Minesweeper</h1>
-        <pre>
-          {
-            JSON.stringify(this.props)
-          }
-        </pre>
         <Board />
+        <h3 className={this.props.messages.type}>{this.props.messages.message}</h3>
       </div>
     )
   }
