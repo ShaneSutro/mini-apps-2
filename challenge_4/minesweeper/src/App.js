@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import { boardUpdate, revealedBoard } from './actions/board';
+import { boardUpdate, revealedBoard, flaggedBoard } from './actions/board';
 
 import './App.css';
 import Board from './components/Board';
@@ -14,6 +14,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   boardUpdate: (board) => dispatch(boardUpdate(board)),
   revealedBoard: (revealed) => dispatch(revealedBoard(revealed)),
+  flaggedBoard: (flagged) => dispatch(flaggedBoard(flagged)),
 })
 
 const isWithinBoundaries = (x, y, n) => {
@@ -30,7 +31,7 @@ const addNumbers = (board) => {
       for (var i = row - 1; i < row + 2; i++) {
         for (var j = cell - 1; j < cell + 2; j++)
           if (isWithinBoundaries(i, j, board.length) && board[i][j] === '💣') {
-            if (board[row][cell] === 'E') {
+            if (board[row][cell] === ' ') {
               board[row][cell] = 1;
             } else {
               board[row][cell]++;
@@ -44,15 +45,19 @@ const addNumbers = (board) => {
 const createBoardWithMines = (n) => {
   const board = [];
   const revealed = [];
+  const flagged = [];
   for (var i = 0; i < n; i++) {
     let row = []
     let revealedRow = []
+    let flaggedRow = []
     for (var j = 0; j < n; j++) {
-      row.push('E')
+      row.push(' ')
       revealedRow.push(false)
+      flaggedRow.push(false)
     }
     board.push(row);
-    revealed.push(revealedRow)
+    revealed.push(revealedRow);
+    flagged.push(flaggedRow);
   }
   let bombsRemaining = n;
   while (bombsRemaining > 0) {
@@ -64,15 +69,16 @@ const createBoardWithMines = (n) => {
     }
   }
   addNumbers(board);
-  return ({board, revealed});
+  return ({board, revealed, flagged});
 }
 
 class App extends Component {
 
   componentDidMount() {
-    const { board, revealed } = createBoardWithMines(10)
+    const { board, revealed, flagged } = createBoardWithMines(10)
     this.props.boardUpdate(board);
     this.props.revealedBoard(revealed);
+    this.props.flaggedBoard({ flagged, numFlags: -1 });
   }
 
   render() {

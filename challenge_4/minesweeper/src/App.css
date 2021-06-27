@@ -21,6 +21,14 @@
   width: 40px;
 }
 
+.cell:hover {
+  cursor: crosshair;
+}
+
+.flagged-true:hover {
+  cursor: not-allowed;
+}
+
 .revealed-false {
   background-color: beige;
 }
