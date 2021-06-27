@@ -1,8 +1,8 @@
 import { combineReducers } from 'redux';
 import board from './actionBoard';
-import actionIncrement from './actionIncrement';
+import revealed from './actionRevealed';
 
 export default combineReducers({
   board,
-  actionIncrement,
+  revealed,
 })

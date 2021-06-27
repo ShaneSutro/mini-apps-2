@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import { boardUpdate } from './actions/board';
-import { increment } from './actions/increment';
+import { boardUpdate, revealedBoard } from './actions/board';
 
 import './App.css';
 import Board from './components/Board';
@@ -14,7 +13,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   boardUpdate: (board) => dispatch(boardUpdate(board)),
-  increment: (number) => dispatch(increment(number))
+  revealedBoard: (revealed) => dispatch(revealedBoard(revealed)),
 })
 
 const isWithinBoundaries = (x, y, n) => {
@@ -30,8 +29,12 @@ const addNumbers = (board) => {
       }
       for (var i = row - 1; i < row + 2; i++) {
         for (var j = cell - 1; j < cell + 2; j++)
-        if (isWithinBoundaries(i, j, board.length) && board[i][j] === '💣') {
-          board[row][cell]++;
+          if (isWithinBoundaries(i, j, board.length) && board[i][j] === '💣') {
+            if (board[row][cell] === 'E') {
+              board[row][cell] = 1;
+            } else {
+              board[row][cell]++;
+          }
         }
       }
     }
@@ -40,12 +43,16 @@ const addNumbers = (board) => {
 
 const createBoardWithMines = (n) => {
   const board = [];
+  const revealed = [];
   for (var i = 0; i < n; i++) {
     let row = []
+    let revealedRow = []
     for (var j = 0; j < n; j++) {
-      row.push(0)
+      row.push('E')
+      revealedRow.push(false)
     }
     board.push(row);
+    revealed.push(revealedRow)
   }
   let bombsRemaining = n;
   while (bombsRemaining > 0) {
@@ -57,27 +64,26 @@ const createBoardWithMines = (n) => {
     }
   }
   addNumbers(board);
-  return board;
+  return ({board, revealed});
 }
 
 class App extends Component {
 
   componentDidMount() {
-    const board = createBoardWithMines(10)
+    const { board, revealed } = createBoardWithMines(10)
     this.props.boardUpdate(board);
+    this.props.revealedBoard(revealed);
   }
 
   render() {
     return (
       <div className="App">
         <h1>Minesweeper</h1>
-        <h3>Count: {this.props.actionIncrement.count}</h3>
         <pre>
           {
             JSON.stringify(this.props)
           }
         </pre>
-        <button onClick={() => this.props.increment(this.props.actionIncrement.count)}>Test Action</button>
         <Board />
       </div>
     )
