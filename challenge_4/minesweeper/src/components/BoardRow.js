@@ -1,7 +1,6 @@
 import React from 'react';
 
 const BoardRow = (props) => {
-  console.log(props);
   return (
     <tr>
       {
