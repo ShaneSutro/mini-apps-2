@@ -23,7 +23,6 @@ const isWithinBoundaries = (x, y, n) => {
 
 const addNumbers = (board) => {
   for (var row = 0; row < board.length; row++) {
-    console.log(board.length);
     for (var cell = 0; cell < board[row].length; cell++) {
       if (board[row][cell] === '💣') {
         continue;
